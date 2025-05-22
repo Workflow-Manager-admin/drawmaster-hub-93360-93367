@@ -179,7 +179,9 @@ const MainContainer = () => {
               
               <Route path="/submissions/edit/:id" element={
                 <ProtectedRoute>
-                  <SubmissionForm submissionId />
+                  {({ match }) => (
+                    <SubmissionForm submissionId={match?.params?.id} />
+                  )}
                 </ProtectedRoute>
               } />
               
