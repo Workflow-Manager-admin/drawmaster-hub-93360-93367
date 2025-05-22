@@ -28,9 +28,14 @@ export const AuthProvider = ({ children }) => {
           // If token is invalid, clear it
           localStorage.removeItem('auth_token');
           setToken(null);
+          setUser(null);
           setIsAuthenticated(false);
           console.error('Error verifying authentication:', err);
         }
+      } else {
+        // Make sure we reset authentication state if no token
+        setIsAuthenticated(false);
+        setUser(null);
       }
       
       setLoading(false);

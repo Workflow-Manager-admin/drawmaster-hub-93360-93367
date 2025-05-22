@@ -453,3 +453,80 @@ src/components/MainContainer/MainContainer.js
   Line 142:16:  Parsing error: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (142:16)
 
 webpack compiled with 2 errors and 1 warning
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/components/MainContainer/MainContainer.js
+Syntax error: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (142:16) (142:16)
+WARNING in [eslint] 
+src/utils/api.js
+  Line 95:1:  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+ERROR in ./src/components/MainContainer/MainContainer.js
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/src/components/MainContainer/MainContainer.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (142:16)
+
+  140 |                   </div>
+  141 |                 </div>
+> 142 |                 </ProtectedRoute>
+      |                 ^
+  143 |               } />
+  144 |               
+  145 |               {/* Submissions Route - Protected */}
+    at constructor (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:360:19)
+    at FlowParserMixin.raise (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:3327:19)
+    at FlowParserMixin.jsxParseElementAt (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6915:18)
+    at FlowParserMixin.jsxParseElement (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6922:17)
+    at FlowParserMixin.parseExprAtom (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6932:19)
+    at FlowParserMixin.parseExprSubscripts (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10758:23)
+    at FlowParserMixin.parseUpdate (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10743:21)
+    at FlowParserMixin.parseMaybeUnary (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10723:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10576:61)
+    at FlowParserMixin.parseExprOps (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10581:23)
+    at FlowParserMixin.parseMaybeConditional (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10558:23)
+    at FlowParserMixin.parseMaybeAssign (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10521:21)
+    at /home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:5722:39
+    at FlowParserMixin.tryParse (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:3665:20)
+    at FlowParserMixin.parseMaybeAssign (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:5722:18)
+    at FlowParserMixin.parseExpressionBase (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10475:23)
+    at /home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10471:39
+    at FlowParserMixin.allowInAnd (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:12100:12)
+    at FlowParserMixin.parseExpression (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10471:17)
+    at FlowParserMixin.jsxParseExpressionContainer (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6805:31)
+    at FlowParserMixin.jsxParseAttributeValue (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6777:21)
+    at FlowParserMixin.jsxParseAttribute (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6826:38)
+    at FlowParserMixin.jsxParseOpeningElementAfterName (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6840:28)
+    at FlowParserMixin.jsxParseOpeningElementAfterName (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6292:18)
+    at FlowParserMixin.jsxParseOpeningElementAt (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6835:17)
+    at FlowParserMixin.jsxParseElementAt (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6859:33)
+    at FlowParserMixin.jsxParseElementAt (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6871:32)
+    at FlowParserMixin.jsxParseElement (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6922:17)
+    at FlowParserMixin.parseExprAtom (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6932:19)
+    at FlowParserMixin.parseExprSubscripts (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10758:23)
+    at FlowParserMixin.parseUpdate (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10743:21)
+    at FlowParserMixin.parseMaybeUnary (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10723:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10576:61)
+    at FlowParserMixin.parseExprOps (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10581:23)
+    at FlowParserMixin.parseMaybeConditional (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10558:23)
+    at FlowParserMixin.parseMaybeAssign (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10521:21)
+    at /home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:5722:39
+    at FlowParserMixin.tryParse (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:3665:20)
+    at FlowParserMixin.parseMaybeAssign (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:5722:18)
+    at /home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10491:39
+    at FlowParserMixin.allowInAnd (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:12100:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10491:17)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:11359:28)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:5815:18)
+    at FlowParserMixin.parseExprAtom (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:11006:23)
+    at FlowParserMixin.parseExprAtom (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:6937:20)
+    at FlowParserMixin.parseExprSubscripts (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10758:23)
+    at FlowParserMixin.parseUpdate (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10743:21)
+    at FlowParserMixin.parseMaybeUnary (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10723:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/kavia/workspace/code-generation/drawmaster-hub-93360-93367/drawmaster_hub/node_modules/@babel/parser/lib/index.js:10576:61)
+
+ERROR in [eslint] 
+src/components/MainContainer/MainContainer.js
+  Line 142:16:  Parsing error: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (142:16)
+
+webpack compiled with 2 errors and 1 warning
