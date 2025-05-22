@@ -29,22 +29,16 @@ const AdminWinnerSelection = ({ contestId, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-
-  // Check if user is admin
-  if (!user || user.role !== 'admin') {
-    return (
-      <div className="winner-selection-error">
-        <h3>Unauthorized Access</h3>
-        <p>Only administrators can select winners.</p>
-        <button className="btn" onClick={() => navigate('/contests')}>
-          Back to Contests
-        </button>
-      </div>
-    );
-  }
+  const [isAuthorized, setIsAuthorized] = useState(true);
 
   // Load contest and submissions
   useEffect(() => {
+    // Check if user is admin
+    if (!user || user.role !== 'admin') {
+      setIsAuthorized(false);
+      return;
+    }
+    
     const loadContestData = async () => {
       setLoading(true);
       try {
