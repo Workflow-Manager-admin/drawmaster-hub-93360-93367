@@ -2,63 +2,52 @@ import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import './MainContainer.css';
 import AuthContext from '../../context/AuthContext';
+import ContestContext from '../../context/ContestContext';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import ProtectedRoute from '../Auth/ProtectedRoute';
 import UserDashboard from '../UserDashboard/UserDashboard';
+import ContestList from '../ContestList/ContestList';
+import ContestDetail from '../ContestList/ContestDetail';
+import ContestForm from '../ContestList/ContestForm';
+import '../ContestList/ContestDetail.css';
+import '../ContestList/ContestForm.css';
 
 /**
  * MainContainer - Main structural component for DrawMaster Hub application
  * 
  * This component serves as the central layout container for the application,
  * housing contest management, submissions, and winner announcement sections.
- * It provides the routing structure and will integrate with backend APIs.
- * It now includes authentication-related routes and UI elements.
+ * It provides the routing structure and integrates with backend APIs through context.
+ * It includes authentication-related routes and UI elements.
  */
 const MainContainer = () => {
-  // State for contests and winners
-  const [contests, setContests] = useState([]);
-  const [winners, setWinners] = useState([]);
+  // Loading state for initial UI render
   const [isLoading, setIsLoading] = useState(false);
   
   // Authentication context
   const { user, isAuthenticated, logout } = useContext(AuthContext);
   
+  // Contest context
+  const { contests, loading: contestsLoading, getContests } = useContext(ContestContext);
+  
   // Navigation hook for programmatic navigation
   const navigate = useNavigate();
 
-  // Mock API call - to be replaced with actual API integration
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      setIsLoading(true);
-      try {
-        // In the future, these will be actual API calls
-        // const contestResponse = await fetch('/api/contests');
-        // const contestData = await contestResponse.json();
-        
-        // For now, use mock data
-        const mockContests = [
-          { id: 1, title: 'Character Design Challenge', deadline: '2023-06-30', status: 'active' },
-          { id: 2, title: 'Landscape Illustration Contest', deadline: '2023-07-15', status: 'active' },
-          { id: 3, title: 'Animation Short', deadline: '2023-05-10', status: 'completed' }
-        ];
-        
-        const mockWinners = [
-          { id: 1, contestId: 3, artist: 'Jane Doe', title: 'Urban Dream', imageUrl: 'placeholder.jpg' }
-        ];
-        
-        setContests(mockContests);
-        setWinners(mockWinners);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        // In the future, implement proper error handling
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchInitialData();
-  }, []);
+  // Format date for display
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
+  // Get active contests for winners gallery
+  const getCompletedContestsWithWinners = () => {
+    return contests.filter(
+      contest => contest.status === 'completed' && 
+                contest.winnerAnnounced && 
+                contest.winningSubmissions?.length > 0
+    );
+  };
 
   return (
     <div className="main-container">
@@ -77,6 +66,11 @@ const MainContainer = () => {
           <li><Link to="/submissions" className="nav-link">Submissions</Link></li>
           <li><Link to="/winners" className="nav-link">Winners Gallery</Link></li>
           <li><Link to="/about" className="nav-link">About</Link></li>
+          
+          {/* Admin Link */}
+          {isAuthenticated && user?.role === 'admin' && (
+            <li><Link to="/admin/contests" className="nav-link">Manage Contests</Link></li>
+          )}
           
           {/* Authentication Links */}
           {isAuthenticated ? (
@@ -112,7 +106,7 @@ const MainContainer = () => {
       {/* Main Content Area */}
       <main className="content-area">
         <div className="container">
-          {isLoading ? (
+          {isLoading || contestsLoading ? (
             <div className="loading-indicator">
               <p>Loading content...</p>
             </div>
@@ -122,36 +116,24 @@ const MainContainer = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               
-              {/* Contest Management Route */}
-              <Route path="/contests" element={
-                <div className="contests-section">
-                  <h2>Active Contests</h2>
-                  <div className="contest-list">
-                    {contests
-                      .filter(contest => contest.status === 'active')
-                      .map(contest => (
-                        <div key={contest.id} className="contest-card">
-                          <h3>{contest.title}</h3>
-                          <p>Deadline: {contest.deadline}</p>
-                          <button 
-                            className="btn" 
-                            onClick={() => navigate(`/contests/${contest.id}`)}
-                          >
-                            View Details
-                          </button>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              } />
+              {/* Contest Routes */}
+              <Route path="/contests" element={<ContestList />} />
+              <Route path="/contests/:id" element={<ContestDetail />} />
               
-              {/* Contest Detail Route - Protected */}
-              <Route path="/contests/:id" element={
+              {/* Admin Contest Management Routes */}
+              <Route path="/admin/contests" element={
                 <ProtectedRoute>
-                  <div className="contest-detail-section">
-                    <h2>Contest Details</h2>
-                    <p>This page would show contest details and allow authenticated users to submit entries.</p>
-                  </div>
+                  <ContestList isAdminView={true} />
+                </ProtectedRoute>
+              } />
+              <Route path="/contests/new" element={
+                <ProtectedRoute>
+                  <ContestForm />
+                </ProtectedRoute>
+              } />
+              <Route path="/contests/edit/:id" element={
+                <ProtectedRoute>
+                  <ContestForm />
                 </ProtectedRoute>
               } />
               
@@ -182,15 +164,22 @@ const MainContainer = () => {
               <Route path="/winners" element={
                 <div className="winners-section">
                   <h2>Winners Gallery</h2>
-                  {winners.length > 0 ? (
+                  {getCompletedContestsWithWinners().length > 0 ? (
                     <div className="winners-gallery">
-                      {winners.map(winner => (
-                        <div key={winner.id} className="winner-card">
-                          <h3>{winner.title}</h3>
-                          <p>Artist: {winner.artist}</p>
+                      {/* This is a placeholder until submission integration is complete */}
+                      {getCompletedContestsWithWinners().map(contest => (
+                        <div key={contest._id} className="winner-card">
+                          <h3>{contest.title}</h3>
+                          <p>Contest completed on: {formatDate(contest.deadline)}</p>
                           <div className="winner-image-placeholder">
-                            <span>Winner Artwork</span>
+                            <span>Winner Announcement</span>
                           </div>
+                          <button 
+                            className="btn" 
+                            onClick={() => navigate(`/contests/${contest._id}`)}
+                          >
+                            View Contest Details
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -231,29 +220,45 @@ const MainContainer = () => {
                   <div className="featured-section">
                     <h2>Featured Contests</h2>
                     <div className="contest-list featured">
-                      {contests.slice(0, 2).map(contest => (
-                        <div key={contest.id} className="contest-card">
-                          <h3>{contest.title}</h3>
-                          <p>Deadline: {contest.deadline}</p>
-                          <button 
-                            className="btn" 
-                            onClick={() => navigate(`/contests/${contest.id}`)}
-                          >
-                            View Details
-                          </button>
+                      {contests
+                        .filter(contest => contest.status === 'active')
+                        .slice(0, 2)
+                        .map(contest => (
+                          <div key={contest._id} className="contest-card">
+                            <h3>{contest.title}</h3>
+                            <p>Deadline: {formatDate(contest.deadline)}</p>
+                            <button 
+                              className="btn" 
+                              onClick={() => navigate(`/contests/${contest._id}`)}
+                            >
+                              View Details
+                            </button>
+                          </div>
+                        ))}
+                        
+                      {contests.filter(contest => contest.status === 'active').length === 0 && (
+                        <div className="no-contests">
+                          <p>No active contests at the moment.</p>
+                          <p>Check back soon for new contests!</p>
                         </div>
-                      ))}
+                      )}
                     </div>
                   </div>
                   
-                  {winners.length > 0 && (
+                  {getCompletedContestsWithWinners().length > 0 && (
                     <div className="recent-winners">
                       <h2>Recent Winners</h2>
                       <div className="winners-preview">
-                        {winners.slice(0, 1).map(winner => (
-                          <div key={winner.id} className="winner-preview-card">
-                            <h3>{winner.title}</h3>
-                            <p>Artist: {winner.artist}</p>
+                        {getCompletedContestsWithWinners().slice(0, 1).map(contest => (
+                          <div key={contest._id} className="winner-preview-card">
+                            <h3>{contest.title}</h3>
+                            <p>Contest Winner Announced!</p>
+                            <button 
+                              className="btn" 
+                              onClick={() => navigate(`/contests/${contest._id}`)}
+                            >
+                              View Winners
+                            </button>
                           </div>
                         ))}
                         <button 
