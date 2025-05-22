@@ -19,3 +19,17 @@ To create a production build, use npm run build.
 
 webpack compiled successfully
 Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/utils/api.js
+  Line 109:1:  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/utils/api.js
+  Line 109:1:  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+webpack compiled with 1 warning
