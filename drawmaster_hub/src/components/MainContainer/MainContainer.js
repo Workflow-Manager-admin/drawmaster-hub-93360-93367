@@ -154,18 +154,37 @@ const MainContainer = () => {
                 </ProtectedRoute>
               } />
               
-              {/* Submissions Route - Protected */}
+              {/* Submissions Routes */}
               <Route path="/submissions" element={
                 <ProtectedRoute>
-                  <div className="submissions-section">
-                    <h2>Submission Management</h2>
-                    <p>This section will allow users to submit their artwork and view their submissions.</p>
-                    {/* Placeholder for submission management features */}
-                    <div className="placeholder-content">
-                      <p>Submission functionality coming soon!</p>
-                    </div>
-                  </div>
+                  <SubmissionList userOnly={true} />
                 </ProtectedRoute>
+              } />
+              
+              <Route path="/submissions/new" element={
+                <ProtectedRoute>
+                  <SubmissionForm />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/submissions/new/:contestId" element={
+                <ProtectedRoute>
+                  <SubmissionForm />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/submissions/:id" element={
+                <SubmissionDetail />
+              } />
+              
+              <Route path="/submissions/edit/:id" element={
+                <ProtectedRoute>
+                  <SubmissionForm submissionId />
+                </ProtectedRoute>
+              } />
+              
+              <Route path="/submissions/contest/:id" element={
+                <SubmissionList userOnly={false} />
               } />
               
               {/* Winners Gallery Route */}
