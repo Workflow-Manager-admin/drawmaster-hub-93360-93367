@@ -32,9 +32,10 @@
 
 /* Navigation Styles */
 .main-nav {
-  background-color: rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, var(--secondary-blue), var(--secondary-purple));
   padding: 12px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--primary-pink);
+  box-shadow: 0 4px 10px rgba(114, 9, 183, 0.3);
 }
 
 .nav-links {
@@ -50,13 +51,34 @@
   text-decoration: none;
   padding: 8px 16px;
   margin: 0 8px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+}
+
+.nav-link:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--primary-pink), var(--accent-cyan));
+  transition: width 0.3s ease;
 }
 
 .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  color: var(--kavia-orange);
+  color: var(--accent-cyan);
+  border-color: var(--primary-pink);
+  transform: translateY(-2px);
+}
+
+.nav-link:hover:before {
+  width: 100%;
 }
 
 /* Content Area */
