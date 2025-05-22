@@ -1,5 +1,37 @@
 const Submission = require('../models/Submission');
 const Contest = require('../models/Contest');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname.replace(/\s+/g, '-')}`);
+  }
+});
+
+// File filter for images
+const fileFilter = (req, file, cb) => {
+  // Accept image files only
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Only image files are allowed!'), false);
+  }
+};
+
+// Initialize upload middleware
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // limit to 5MB
+  },
+  fileFilter: fileFilter
+}).single('image');
 
 /**
  * @desc    Get all submissions
