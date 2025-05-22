@@ -204,9 +204,28 @@
 .welcome-banner {
   text-align: center;
   padding: 40px 20px;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.2), rgba(114, 9, 183, 0.2));
+  border-radius: 16px;
   margin-bottom: 40px;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-banner:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(to right, var(--primary-blue), var(--primary-pink), var(--primary-green), var(--accent-cyan));
+}
+
+.welcome-banner h2 {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
 }
 
 .welcome-banner p {
