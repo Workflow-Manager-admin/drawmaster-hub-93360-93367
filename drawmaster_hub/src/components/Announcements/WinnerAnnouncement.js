@@ -220,30 +220,37 @@ const WinnerAnnouncement = ({ contestId, displayMode = 'full' }) => {
         <div className="additional-winners">
           <h3>Honorable Mentions</h3>
           <ul className="honorable-mention-list">
-            {sortedWinners.slice(3).map(winner => (
-              <li key={winner._id} className="honorable-mention-item">
-                <div className="winner-rank">#{winner.rank}</div>
-                <div className="honorable-mention-content">
-                  <div className="honorable-artwork">
-                    {winner.submission.imageUrl ? (
-                      <img 
-                        src={winner.submission.imageUrl} 
-                        alt={winner.submission.title}
-                        className="honorable-image"
-                      />
-                    ) : (
-                      <div className="honorable-placeholder">No Image</div>
-                    )}
+            {sortedWinners.slice(3).map(winner => {
+              // Skip if submission data is missing
+              if (!winner.submission) return null;
+              
+              return (
+                <li key={winner._id} className="honorable-mention-item">
+                  <div className="winner-rank">#{winner.rank}</div>
+                  <div className="honorable-mention-content">
+                    <div className="honorable-artwork">
+                      {winner.submission.imageUrl ? (
+                        <img 
+                          src={winner.submission.imageUrl} 
+                          alt={winner.submission.title || "Winner submission"}
+                          className="honorable-image"
+                        />
+                      ) : (
+                        <div className="honorable-placeholder">No Image</div>
+                      )}
+                    </div>
+                    <div className="honorable-info">
+                      <h4>{winner.submission.title || "Untitled"}</h4>
+                      <p>
+                        By: {winner.submission.user && winner.submission.user.name 
+                          ? winner.submission.user.name 
+                          : 'Unknown'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="honorable-info">
-                    <h4>{winner.submission.title}</h4>
-                    <p>
-                      By: {winner.submission.user ? winner.submission.user.name : 'Unknown'}
-                    </p>
-                  </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
