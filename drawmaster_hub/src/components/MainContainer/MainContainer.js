@@ -114,7 +114,11 @@ const MainContainer = () => {
             </div>
           ) : (
             <Routes>
-              {/* Contest Management Route */}
+              {/* Authentication Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              
+              {/* Contest Management Route - Protected */}
               <Route path="/contests" element={
                 <div className="contests-section">
                   <h2>Active Contests</h2>
@@ -137,9 +141,10 @@ const MainContainer = () => {
                 </div>
               } />
               
-              {/* Submissions Route */}
+              {/* Submissions Route - Protected */}
               <Route path="/submissions" element={
-                <div className="submissions-section">
+                <ProtectedRoute>
+                  <div className="submissions-section">
                   <h2>Submission Management</h2>
                   <p>This section will allow users to submit their artwork and view their submissions.</p>
                   {/* Placeholder for submission management features */}
