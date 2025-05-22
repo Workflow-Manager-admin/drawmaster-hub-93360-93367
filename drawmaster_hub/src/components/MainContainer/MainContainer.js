@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import './MainContainer.css';
 import AuthContext from '../../context/AuthContext';
@@ -82,6 +82,9 @@ const MainContainer = () => {
             <>
               <li>
                 <span className="nav-link">Welcome, {user?.name}</span>
+              </li>
+              <li>
+                <Link to="/dashboard" className="nav-link">Dashboard</Link>
               </li>
               <li>
                 <button 
