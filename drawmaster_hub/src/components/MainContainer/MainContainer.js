@@ -151,6 +151,15 @@ const MainContainer = () => {
                 </ProtectedRoute>
               } />
               
+              {/* User Dashboard - Protected */}
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <React.Suspense fallback={<div className="loading-indicator"><p>Loading dashboard...</p></div>}>
+                    {React.lazy(() => import('../UserDashboard/UserDashboard'))}
+                  </React.Suspense>
+                </ProtectedRoute>
+              } />
+              
               {/* Submissions Route - Protected */}
               <Route path="/submissions" element={
                 <ProtectedRoute>
