@@ -269,6 +269,45 @@
   border-top: 1px solid var(--border-color);
 }
 
+/* Section Headings - Enhanced styling */
+.contests-section h2,
+.submissions-section h2,
+.winners-section h2,
+.about-section h2,
+.featured-section h2,
+.recent-winners h2 {
+  position: relative;
+  display: inline-block;
+  padding: 0 0 8px 0;
+  margin-bottom: 20px;
+}
+
+.contests-section h2:after,
+.submissions-section h2:after,
+.winners-section h2:after,
+.about-section h2:after,
+.featured-section h2:after,
+.recent-winners h2:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 60%;
+  background: linear-gradient(to right, var(--primary-blue), var(--primary-pink), var(--primary-green));
+  transition: width 0.3s ease;
+  border-radius: 3px;
+}
+
+.contests-section h2:hover:after,
+.submissions-section h2:hover:after,
+.winners-section h2:hover:after,
+.about-section h2:hover:after,
+.featured-section h2:hover:after,
+.recent-winners h2:hover:after {
+  width: 100%;
+}
+
 .winners-preview {
   background: linear-gradient(135deg, rgba(76, 201, 160, 0.1), rgba(76, 201, 240, 0.1));
   border-radius: 12px;
