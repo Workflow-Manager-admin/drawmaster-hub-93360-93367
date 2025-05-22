@@ -76,6 +76,32 @@ const MainContainer = () => {
           <li><Link to="/submissions" className="nav-link">Submissions</Link></li>
           <li><Link to="/winners" className="nav-link">Winners Gallery</Link></li>
           <li><Link to="/about" className="nav-link">About</Link></li>
+          
+          {/* Authentication Links */}
+          {isAuthenticated ? (
+            <>
+              <li>
+                <span className="nav-link">Welcome, {user?.name}</span>
+              </li>
+              <li>
+                <button 
+                  onClick={() => {
+                    logout();
+                    navigate('/');
+                  }} 
+                  className="nav-link"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                >
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li><Link to="/login" className="nav-link">Login</Link></li>
+              <li><Link to="/register" className="nav-link">Register</Link></li>
+            </>
+          )}
         </ul>
       </nav>
       
