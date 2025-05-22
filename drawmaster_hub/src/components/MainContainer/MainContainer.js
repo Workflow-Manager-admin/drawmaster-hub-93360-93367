@@ -298,12 +298,15 @@ const MainContainer = () => {
                         {getCompletedContestsWithWinners().slice(0, 1).map(contest => (
                           <div key={contest._id} className="winner-preview-card">
                             <h3>{contest.title}</h3>
-                            <p>Contest Winner Announced!</p>
+                            <WinnerAnnouncement 
+                              contestId={contest._id} 
+                              displayMode="compact" 
+                            />
                             <button 
                               className="btn" 
-                              onClick={() => navigate(`/contests/${contest._id}`)}
+                              onClick={() => navigate(`/contests/${contest._id}/winners`)}
                             >
-                              View Winners
+                              View Winners Details
                             </button>
                           </div>
                         ))}
