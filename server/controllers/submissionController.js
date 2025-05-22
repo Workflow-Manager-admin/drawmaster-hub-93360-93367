@@ -113,53 +113,105 @@ exports.getSubmission = async (req, res) => {
  * @PUBLIC_INTERFACE
  */
 exports.createSubmission = async (req, res) => {
-  try {
-    // Add user to request body
-    req.body.user = req.user.id;
-    
-    // Check if contest exists and is active
-    const contest = await Contest.findById(req.body.contest);
-    
-    if (!contest) {
-      return res.status(404).json({
-        success: false,
-        error: 'Contest not found'
-      });
-    }
-    
-    if (contest.status !== 'active') {
+  // Use multer upload middleware
+  upload(req, res, async function(err) {
+    if (err instanceof multer.MulterError) {
+      // A Multer error occurred when uploading
       return res.status(400).json({
         success: false,
-        error: `Cannot submit to a contest that is ${contest.status}`
+        error: `Upload error: ${err.message}`
       });
-    }
-    
-    // Check if user already submitted to this contest
-    const existingSubmission = await Submission.findOne({
-      user: req.user.id,
-      contest: req.body.contest
-    });
-    
-    if (existingSubmission) {
+    } else if (err) {
+      // An unknown error occurred
       return res.status(400).json({
         success: false,
-        error: 'You have already submitted to this contest'
+        error: `Error: ${err.message}`
       });
     }
     
-    // Create submission
-    const submission = await Submission.create(req.body);
-    
-    res.status(201).json({
-      success: true,
-      data: submission
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: error.message
-    });
-  }
+    try {
+      // Add user to request body
+      req.body.user = req.user.id;
+      
+      // Check if contest exists and is active
+      const contest = await Contest.findById(req.body.contest);
+      
+      if (!contest) {
+        return res.status(404).json({
+          success: false,
+          error: 'Contest not found'
+        });
+      }
+      
+      if (contest.status !== 'active') {
+        return res.status(400).json({
+          success: false,
+          error: `Cannot submit to a contest that is ${contest.status}`
+        });
+      }
+      
+      // Check if user already submitted to this contest
+      const existingSubmission = await Submission.findOne({
+        user: req.user.id,
+        contest: req.body.contest
+      });
+      
+      if (existingSubmission) {
+        // If file was uploaded, delete it
+        if (req.file) {
+          fs.unlinkSync(req.file.path);
+        }
+        
+        return res.status(400).json({
+          success: false,
+          error: 'You have already submitted to this contest'
+        });
+      }
+      
+      // Handle image URL
+      let imageUrl = req.body.imageUrl;
+      
+      // If file was uploaded, use its path instead
+      if (req.file) {
+        // Create a URL-friendly path to the uploaded file
+        imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      }
+      
+      // Ensure we have an image URL
+      if (!imageUrl) {
+        return res.status(400).json({
+          success: false,
+          error: 'An image URL or file upload is required'
+        });
+      }
+      
+      // Create submission with file path
+      const submissionData = {
+        title: req.body.title,
+        description: req.body.description,
+        contest: req.body.contest,
+        user: req.user.id,
+        imageUrl: imageUrl
+      };
+      
+      const submission = await Submission.create(submissionData);
+      
+      res.status(201).json({
+        success: true,
+        data: submission
+      });
+    } catch (error) {
+      // If file was uploaded, delete it on error
+      if (req.file) {
+        fs.unlinkSync(req.file.path);
+      }
+      
+      res.status(400).json({
+        success: false,
+        error: error.message
+      });
+    }
+  });
 };
 
 /**
