@@ -3,6 +3,7 @@ import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import './MainContainer.css';
 import AuthContext from '../../context/AuthContext';
 import ContestContext from '../../context/ContestContext';
+import WinnerContext from '../../context/WinnerContext';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import ProtectedRoute from '../Auth/ProtectedRoute';
@@ -20,6 +21,12 @@ import SubmissionDetail from '../Submissions/SubmissionDetail';
 import '../Submissions/SubmissionForm.css';
 import '../Submissions/SubmissionList.css';
 import '../Submissions/SubmissionDetail.css';
+
+// Import Winner components
+import AdminWinnerSelection from '../Admin/AdminWinnerSelection';
+import WinnerAnnouncement from '../Announcements/WinnerAnnouncement';
+import '../Admin/AdminWinnerSelection.css';
+import '../Announcements/WinnerAnnouncement.css';
 
 /**
  * MainContainer - Main structural component for DrawMaster Hub application
