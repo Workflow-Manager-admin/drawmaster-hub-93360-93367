@@ -60,7 +60,7 @@ const AdminWinnerSelection = ({ contestId, onClose }) => {
     if (resolvedContestId) {
       loadContestData();
     }
-  }, [resolvedContestId, getContest, getSubmissionsByContest, currentContest]);
+  }, [resolvedContestId, getContest, getSubmissionsByContest, currentContest, user]);
 
   // Reset error when unmounting
   useEffect(() => {
@@ -68,6 +68,19 @@ const AdminWinnerSelection = ({ contestId, onClose }) => {
       clearError();
     };
   }, [clearError]);
+
+  // Show unauthorized message if user is not admin
+  if (!isAuthorized) {
+    return (
+      <div className="winner-selection-error">
+        <h3>Unauthorized Access</h3>
+        <p>Only administrators can select winners.</p>
+        <button className="btn" onClick={() => navigate('/contests')}>
+          Back to Contests
+        </button>
+      </div>
+    );
+  }
 
   // Handler for adding a submission as a winner
   const handleAddWinner = (submissionId) => {
