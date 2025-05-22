@@ -94,6 +94,29 @@
   color: var(--text-secondary);
 }
 
+.loading-indicator p {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: rgba(67, 97, 238, 0.1);
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.15);
+  animation: pulse 2s infinite;
+  border: 1px solid var(--border-color);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(247, 37, 133, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(76, 201, 160, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+  }
+}
+
 /* Contest Section */
 .contests-section, 
 .submissions-section,
