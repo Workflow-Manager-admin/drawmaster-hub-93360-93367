@@ -40,17 +40,18 @@ body {
 }
 
 .navbar {
-  background-color: var(--kavia-dark);
+  background: linear-gradient(to right, var(--secondary-blue), var(--secondary-purple));
   padding: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
   position: fixed;
   top: 0;
   width: 100%;
   box-sizing: border-box;
   z-index: 100;
+  box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
 }
 
 .logo {
@@ -62,7 +63,7 @@ body {
 }
 
 .logo-symbol {
-  color: var(--kavia-orange);
+  color: var(--accent-cyan);
 }
 
 .container {
