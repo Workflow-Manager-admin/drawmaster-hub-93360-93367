@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import './MainContainer.css';
+import AuthContext from '../../context/AuthContext';
+import Login from '../Auth/Login';
+import Register from '../Auth/Register';
+import ProtectedRoute from '../Auth/ProtectedRoute';
 
 /**
  * MainContainer - Main structural component for DrawMaster Hub application
@@ -8,12 +12,16 @@ import './MainContainer.css';
  * This component serves as the central layout container for the application,
  * housing contest management, submissions, and winner announcement sections.
  * It provides the routing structure and will integrate with backend APIs.
+ * It now includes authentication-related routes and UI elements.
  */
 const MainContainer = () => {
   // State for contests and winners
   const [contests, setContests] = useState([]);
   const [winners, setWinners] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Authentication context
+  const { user, isAuthenticated, logout } = useContext(AuthContext);
   
   // Navigation hook for programmatic navigation
   const navigate = useNavigate();
