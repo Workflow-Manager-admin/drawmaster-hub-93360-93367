@@ -85,9 +85,10 @@ body {
 }
 
 .subtitle {
-  color: var(--kavia-orange);
+  color: var(--primary-pink);
   font-weight: 500;
   font-size: 1.1rem;
+  text-shadow: 0 0 10px rgba(247, 37, 133, 0.4);
 }
 
 .title {
