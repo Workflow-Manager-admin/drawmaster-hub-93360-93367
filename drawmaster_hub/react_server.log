@@ -598,3 +598,25 @@ src/utils/api.js
   Line 95:1:  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
 
 webpack compiled with 1 warning
+Compiling...
+Failed to compile.
+
+[eslint] 
+src/components/MainContainer/MainContainer.js
+  Line 161:22:  'UserDashboard' is not defined  react/jsx-no-undef
+
+Search for the keywords to learn more about each error.
+WARNING in [eslint] 
+src/components/MainContainer/MainContainer.js
+  Line 1:50:  'lazy' is defined but never used  no-unused-vars
+
+src/utils/api.js
+  Line 95:1:  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+ERROR in [eslint] 
+src/components/MainContainer/MainContainer.js
+  Line 161:22:  'UserDashboard' is not defined  react/jsx-no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 1 error and 1 warning
