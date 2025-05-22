@@ -39,6 +39,7 @@ app.get('/', (req, res) => {
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/contests', require('./routes/api/contests'));
 app.use('/api/submissions', require('./routes/api/submissions'));
+app.use('/api/winners', require('./routes/api/winners'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
