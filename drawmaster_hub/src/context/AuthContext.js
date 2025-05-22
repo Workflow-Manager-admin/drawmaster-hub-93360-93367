@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { get, post } from '../utils/api';
 
 /**
  * Authentication Context
@@ -20,26 +21,15 @@ export const AuthProvider = ({ children }) => {
     const checkLoggedIn = async () => {
       if (token) {
         try {
-          const response = await fetch('http://localhost:5000/api/users/me', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          
-          const data = await response.json();
-          
-          if (response.ok) {
-            setUser(data.data);
-            setIsAuthenticated(true);
-          } else {
-            // If token is invalid, clear it
-            localStorage.removeItem('auth_token');
-            setToken(null);
-            setIsAuthenticated(false);
-          }
+          const data = await get('/users/me');
+          setUser(data.data);
+          setIsAuthenticated(true);
         } catch (err) {
-          console.error('Error verifying authentication:', err);
+          // If token is invalid, clear it
+          localStorage.removeItem('auth_token');
+          setToken(null);
           setIsAuthenticated(false);
+          console.error('Error verifying authentication:', err);
         }
       }
       
@@ -55,29 +45,17 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     
     try {
-      const response = await fetch('http://localhost:5000/api/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      });
+      const data = await post('/users/register', userData);
       
-      const data = await response.json();
+      localStorage.setItem('auth_token', data.token);
+      setToken(data.token);
+      setIsAuthenticated(true);
       
-      if (response.ok) {
-        localStorage.setItem('auth_token', data.token);
-        setToken(data.token);
-        setIsAuthenticated(true);
-        
-        // Get user data after successful registration
-        await loadUser(data.token);
-      } else {
-        setError(data.error || 'Registration failed');
-        setIsAuthenticated(false);
-      }
+      // Get user data after successful registration
+      await loadUser(data.token);
     } catch (err) {
-      setError('An error occurred during registration');
+      setError(err.message || 'Registration failed');
+      setIsAuthenticated(false);
       console.error('Registration error:', err);
     } finally {
       setLoading(false);
@@ -90,27 +68,15 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     
     try {
-      const response = await fetch('http://localhost:5000/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
+      const data = await post('/users/login', { email, password });
       
-      const data = await response.json();
-      
-      if (response.ok) {
-        localStorage.setItem('auth_token', data.token);
-        setToken(data.token);
-        setUser(data.user);
-        setIsAuthenticated(true);
-      } else {
-        setError(data.error || 'Invalid credentials');
-        setIsAuthenticated(false);
-      }
+      localStorage.setItem('auth_token', data.token);
+      setToken(data.token);
+      setUser(data.user);
+      setIsAuthenticated(true);
     } catch (err) {
-      setError('An error occurred during login');
+      setError(err.message || 'Invalid credentials');
+      setIsAuthenticated(false);
       console.error('Login error:', err);
     } finally {
       setLoading(false);
@@ -122,21 +88,12 @@ export const AuthProvider = ({ children }) => {
     if (!currentToken) return;
     
     try {
-      const response = await fetch('http://localhost:5000/api/users/me', {
-        headers: {
-          'Authorization': `Bearer ${currentToken}`
-        }
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        setUser(data.data);
-      } else {
-        // If token is invalid, clear it
-        logout();
-      }
+      // Token is automatically included in the request by the API utility
+      const data = await get('/users/me');
+      setUser(data.data);
     } catch (err) {
+      // If token is invalid, clear it
+      logout();
       console.error('Error loading user data:', err);
     }
   };
