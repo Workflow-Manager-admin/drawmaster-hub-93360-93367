@@ -66,20 +66,34 @@ export const get = (endpoint, params = {}) => {
 /**
  * Make a POST request
  * @param {string} endpoint - The API endpoint
- * @param {Object} data - The data to send
+ * @param {Object|FormData} data - The data to send
+ * @param {boolean} isMultipart - Whether the request contains file data
  * @returns {Promise} The axios promise
  */
-export const post = (endpoint, data = {}) => {
+export const post = (endpoint, data = {}, isMultipart = false) => {
+  if (isMultipart) {
+    const config = {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    };
+    return api.post(endpoint, data, config);
+  }
   return api.post(endpoint, data);
 };
 
 /**
  * Make a PUT request
  * @param {string} endpoint - The API endpoint
- * @param {Object} data - The data to send
+ * @param {Object|FormData} data - The data to send
+ * @param {boolean} isMultipart - Whether the request contains file data
  * @returns {Promise} The axios promise
  */
-export const put = (endpoint, data = {}) => {
+export const put = (endpoint, data = {}, isMultipart = false) => {
+  if (isMultipart) {
+    const config = {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    };
+    return api.put(endpoint, data, config);
+  }
   return api.put(endpoint, data);
 };
 
