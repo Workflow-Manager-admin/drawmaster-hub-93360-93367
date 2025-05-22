@@ -13,6 +13,14 @@ import ContestForm from '../ContestList/ContestForm';
 import '../ContestList/ContestDetail.css';
 import '../ContestList/ContestForm.css';
 
+// Import Submission components
+import SubmissionForm from '../Submissions/SubmissionForm';
+import SubmissionList from '../Submissions/SubmissionList';
+import SubmissionDetail from '../Submissions/SubmissionDetail';
+import '../Submissions/SubmissionForm.css';
+import '../Submissions/SubmissionList.css';
+import '../Submissions/SubmissionDetail.css';
+
 /**
  * MainContainer - Main structural component for DrawMaster Hub application
  * 
