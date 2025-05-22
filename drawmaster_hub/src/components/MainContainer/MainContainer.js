@@ -118,7 +118,7 @@ const MainContainer = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               
-              {/* Contest Management Route - Protected */}
+              {/* Contest Management Route */}
               <Route path="/contests" element={
                 <div className="contests-section">
                   <h2>Active Contests</h2>
@@ -139,6 +139,15 @@ const MainContainer = () => {
                       ))}
                   </div>
                 </div>
+              } />
+              
+              {/* Contest Detail Route - Protected */}
+              <Route path="/contests/:id" element={
+                <ProtectedRoute>
+                  <div className="contest-detail-section">
+                    <h2>Contest Details</h2>
+                    <p>This page would show contest details and allow authenticated users to submit entries.</p>
+                  </div>
                 </ProtectedRoute>
               } />
               
@@ -146,13 +155,13 @@ const MainContainer = () => {
               <Route path="/submissions" element={
                 <ProtectedRoute>
                   <div className="submissions-section">
-                  <h2>Submission Management</h2>
-                  <p>This section will allow users to submit their artwork and view their submissions.</p>
-                  {/* Placeholder for submission management features */}
-                  <div className="placeholder-content">
-                    <p>Submission functionality coming soon!</p>
+                    <h2>Submission Management</h2>
+                    <p>This section will allow users to submit their artwork and view their submissions.</p>
+                    {/* Placeholder for submission management features */}
+                    <div className="placeholder-content">
+                      <p>Submission functionality coming soon!</p>
+                    </div>
                   </div>
-                </div>
                 </ProtectedRoute>
               } />
               
