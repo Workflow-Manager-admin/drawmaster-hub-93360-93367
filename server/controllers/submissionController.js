@@ -221,57 +221,117 @@ exports.createSubmission = async (req, res) => {
  * @PUBLIC_INTERFACE
  */
 exports.updateSubmission = async (req, res) => {
-  try {
-    let submission = await Submission.findById(req.params.id);
-    
-    if (!submission) {
-      return res.status(404).json({
-        success: false,
-        error: 'Submission not found'
-      });
-    }
-    
-    // Make sure user is submission owner or admin
-    if (submission.user.toString() !== req.user.id && req.user.role !== 'admin') {
-      return res.status(403).json({
-        success: false,
-        error: 'Not authorized to update this submission'
-      });
-    }
-    
-    // Get the contest
-    const contest = await Contest.findById(submission.contest);
-    
-    // Check if contest is still active
-    if (contest.status !== 'active') {
+  // Use multer upload middleware
+  upload(req, res, async function(err) {
+    if (err instanceof multer.MulterError) {
+      // A Multer error occurred when uploading
       return res.status(400).json({
         success: false,
-        error: 'Cannot update submission after contest deadline'
+        error: `Upload error: ${err.message}`
+      });
+    } else if (err) {
+      // An unknown error occurred
+      return res.status(400).json({
+        success: false,
+        error: `Error: ${err.message}`
       });
     }
     
-    // Update submission
-    const fieldsToUpdate = {
-      title: req.body.title,
-      description: req.body.description,
-      imageUrl: req.body.imageUrl
-    };
-    
-    submission = await Submission.findByIdAndUpdate(req.params.id, fieldsToUpdate, {
-      new: true,
-      runValidators: true
-    });
-    
-    res.status(200).json({
-      success: true,
-      data: submission
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: error.message
-    });
-  }
+    try {
+      let submission = await Submission.findById(req.params.id);
+      
+      if (!submission) {
+        // If file was uploaded, delete it
+        if (req.file) {
+          fs.unlinkSync(req.file.path);
+        }
+        
+        return res.status(404).json({
+          success: false,
+          error: 'Submission not found'
+        });
+      }
+      
+      // Make sure user is submission owner or admin
+      if (submission.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        // If file was uploaded, delete it
+        if (req.file) {
+          fs.unlinkSync(req.file.path);
+        }
+        
+        return res.status(403).json({
+          success: false,
+          error: 'Not authorized to update this submission'
+        });
+      }
+      
+      // Get the contest
+      const contest = await Contest.findById(submission.contest);
+      
+      // Check if contest is still active (unless user is admin)
+      if (contest.status !== 'active' && req.user.role !== 'admin') {
+        // If file was uploaded, delete it
+        if (req.file) {
+          fs.unlinkSync(req.file.path);
+        }
+        
+        return res.status(400).json({
+          success: false,
+          error: 'Cannot update submission after contest deadline'
+        });
+      }
+      
+      // Update fields
+      const fieldsToUpdate = {};
+      
+      if (req.body.title) fieldsToUpdate.title = req.body.title;
+      if (req.body.description) fieldsToUpdate.description = req.body.description;
+      
+      // Handle image URL update
+      if (req.file) {
+        // Create a URL-friendly path to the uploaded file
+        fieldsToUpdate.imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+        
+        // If there was an old image and it's in our uploads folder, delete it
+        if (submission.imageUrl && submission.imageUrl.includes('/uploads/')) {
+          try {
+            const oldImagePath = submission.imageUrl.split('/uploads/')[1];
+            if (oldImagePath) {
+              const oldFilePath = path.join('./uploads', oldImagePath);
+              if (fs.existsSync(oldFilePath)) {
+                fs.unlinkSync(oldFilePath);
+              }
+            }
+          } catch (err) {
+            console.error('Error deleting old image:', err);
+          }
+        }
+      } else if (req.body.imageUrl) {
+        fieldsToUpdate.imageUrl = req.body.imageUrl;
+      }
+      
+      // Update submission
+      submission = await Submission.findByIdAndUpdate(req.params.id, fieldsToUpdate, {
+        new: true,
+        runValidators: true
+      });
+      
+      res.status(200).json({
+        success: true,
+        data: submission
+      });
+    } catch (error) {
+      // If file was uploaded, delete it on error
+      if (req.file) {
+        fs.unlinkSync(req.file.path);
+      }
+      
+      res.status(400).json({
+        success: false,
+        error: error.message
+      });
+    }
+  });
 };
 
 /**
