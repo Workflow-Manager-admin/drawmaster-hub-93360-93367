@@ -197,24 +197,40 @@ const ContestDetail = () => {
         </div>
       )}
       
-      {currentContest.status === 'completed' && currentContest.winnerAnnounced && (
+      {currentContest.status === 'completed' && (
         <section className="contest-section winners-section">
           <h3>Winners</h3>
-          {currentContest.winningSubmissions && 
+          {currentContest.winnerAnnounced && 
+           currentContest.winningSubmissions && 
            currentContest.winningSubmissions.length > 0 ? (
-            <div className="winner-list">
-              {currentContest.winningSubmissions.map((winner, index) => (
-                <div key={index} className="winner-item">
-                  <div className="winner-rank">#{winner.rank}</div>
-                  <div className="winner-details">
-                    {/* In a real app, we would fetch submission details and display them here */}
-                    <p>Submission ID: {winner.submission}</p>
+            <>
+              <Link to={`/contests/${currentContest._id}/winners`} className="btn view-winners-btn">
+                View Full Winners Announcement
+              </Link>
+              <div className="winner-list">
+                {currentContest.winningSubmissions
+                  .sort((a, b) => a.rank - b.rank)
+                  .map((winner, index) => (
+                  <div key={index} className="winner-item">
+                    <div className="winner-rank">#{winner.rank}</div>
+                    <div className="winner-details">
+                      <p>Submission ID: {winner.submission}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </>
           ) : (
-            <p>No winners have been announced yet.</p>
+            <>
+              <p>No winners have been announced yet.</p>
+              {isAdmin && currentContest.status === 'completed' && !currentContest.winnerAnnounced && (
+                <div className="admin-winner-actions">
+                  <Link to={`/contests/${currentContest._id}/select-winners`} className="btn select-winners-btn">
+                    Select Winners for this Contest
+                  </Link>
+                </div>
+              )}
+            </>
           )}
         </section>
       )}
