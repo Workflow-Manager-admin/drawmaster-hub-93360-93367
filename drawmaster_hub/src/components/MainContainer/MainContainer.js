@@ -139,6 +139,7 @@ const MainContainer = () => {
                       ))}
                   </div>
                 </div>
+                </ProtectedRoute>
               } />
               
               {/* Submissions Route - Protected */}
@@ -152,6 +153,7 @@ const MainContainer = () => {
                     <p>Submission functionality coming soon!</p>
                   </div>
                 </div>
+                </ProtectedRoute>
               } />
               
               {/* Winners Gallery Route */}
