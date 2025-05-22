@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
+const multer = require('multer');
 const connectDB = require('./config/db');
 
 // Load environment variables
@@ -18,6 +20,15 @@ app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000', // React frontend URL
   credentials: true
 }));
+
+// Set up static files directory for uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Create uploads directory if it doesn't exist
+const fs = require('fs');
+if (!fs.existsSync('./uploads')) {
+  fs.mkdirSync('./uploads');
+}
 
 // Add basic route for testing
 app.get('/', (req, res) => {
