@@ -200,14 +200,14 @@ const MainContainer = () => {
                   <h2>Winners Gallery</h2>
                   {getCompletedContestsWithWinners().length > 0 ? (
                     <div className="winners-gallery">
-                      {/* This is a placeholder until submission integration is complete */}
                       {getCompletedContestsWithWinners().map(contest => (
                         <div key={contest._id} className="winner-card">
                           <h3>{contest.title}</h3>
                           <p>Contest completed on: {formatDate(contest.deadline)}</p>
-                          <div className="winner-image-placeholder">
-                            <span>Winner Announcement</span>
-                          </div>
+                          <WinnerAnnouncement 
+                            contestId={contest._id} 
+                            displayMode="compact" 
+                          />
                           <button 
                             className="btn" 
                             onClick={() => navigate(`/contests/${contest._id}`)}
@@ -221,6 +221,18 @@ const MainContainer = () => {
                     <p>No winners announced yet.</p>
                   )}
                 </div>
+              } />
+              
+              {/* Contest Winners Announcement Route */}
+              <Route path="/contests/:id/winners" element={
+                <WinnerAnnouncement />
+              } />
+              
+              {/* Admin Winner Selection Route */}
+              <Route path="/contests/:id/select-winners" element={
+                <ProtectedRoute>
+                  <AdminWinnerSelection />
+                </ProtectedRoute>
               } />
               
               {/* About Route */}
