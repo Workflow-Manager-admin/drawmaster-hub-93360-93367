@@ -11,8 +11,8 @@ import './SubmissionForm.css';
  * A form for creating or editing contest submissions.
  * Handles image uploads and form validation.
  */
-const SubmissionForm = ({ submissionId = null }) => {
-  const { contestId } = useParams();
+const SubmissionForm = () => {
+  const { contestId, id: submissionId } = useParams();
   const navigate = useNavigate();
   
   const isEditMode = !!submissionId;
