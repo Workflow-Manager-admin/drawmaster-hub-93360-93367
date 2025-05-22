@@ -226,6 +226,31 @@
   border-radius: 8px;
 }
 
+.admin-winner-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.select-winners-btn {
+  background: linear-gradient(to right, var(--primary-pink), var(--secondary-purple)) !important;
+  font-size: 1.1rem !important;
+  padding: 10px 20px !important;
+}
+
+.select-winners-btn:hover {
+  box-shadow: 0 6px 12px rgba(247, 37, 133, 0.3);
+}
+
+.view-winners-btn {
+  display: block;
+  margin: 0 auto 20px;
+  background: linear-gradient(to right, var(--primary-green), var(--accent-cyan)) !important;
+}
+
+.view-winners-btn:hover {
+  box-shadow: 0 6px 12px rgba(76, 201, 160, 0.3);
+}
+
 .winner-rank {
   background: linear-gradient(135deg, var(--primary-pink), var(--secondary-purple));
   width: 36px;
