@@ -1,9 +1,27 @@
 :root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
+  /* Primary Colors */
+  --primary-blue: #4361ee;
+  --primary-pink: #f72585;
+  --primary-green: #4cc9a0;
+  
+  /* Secondary Colors */
+  --secondary-blue: #3a0ca3;
+  --secondary-pink: #b5179e;
+  --secondary-green: #2dc653;
+  --secondary-purple: #7209b7;
+
+  /* Accent Colors */
+  --accent-yellow: #ffcb77;
+  --accent-cyan: #4cc9f0;
+  --accent-orange: #fb8500;
+  
+  /* UI Colors */
+  --background-dark: #121420;
+  --card-bg: rgba(67, 97, 238, 0.1);
   --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --border-color: rgba(247, 37, 133, 0.3);
+  --footer-bg: rgba(58, 12, 163, 0.4);
 }
 
 body {
