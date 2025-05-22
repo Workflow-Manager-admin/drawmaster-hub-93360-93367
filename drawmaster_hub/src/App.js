@@ -5,15 +5,16 @@ import MainContainer from './components/MainContainer/MainContainer';
 import { AuthProvider } from './context/AuthContext';
 import { ContestProvider } from './context/ContestContext';
 import { SubmissionProvider } from './context/SubmissionContext';
+import { WinnerProvider } from './context/WinnerContext';
 
 /**
  * App Component - Root component of the DrawMaster Hub application
  * 
  * This component serves as the entry point of the application and sets up
  * the router for navigation between different sections of the application.
- * It wraps the application with the AuthProvider, ContestProvider, and
- * SubmissionProvider to make authentication, contest, and submission
- * state/functions available throughout the app.
+ * It wraps the application with the AuthProvider, ContestProvider, 
+ * SubmissionProvider, and WinnerProvider to make authentication, contest, 
+ * submission, and winner state/functions available throughout the app.
  */
 function App() {
   return (
@@ -21,9 +22,11 @@ function App() {
       <AuthProvider>
         <ContestProvider>
           <SubmissionProvider>
-            <Router>
-              <MainContainer />
-            </Router>
+            <WinnerProvider>
+              <Router>
+                <MainContainer />
+              </Router>
+            </WinnerProvider>
           </SubmissionProvider>
         </ContestProvider>
       </AuthProvider>
