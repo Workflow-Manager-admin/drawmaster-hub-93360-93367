@@ -134,7 +134,7 @@ const WinnerAnnouncement = ({ contestId, displayMode = 'full' }) => {
       
       <div className="winners-podium">
         {/* Display the top 3 winners in a special podium layout */}
-        {sortedWinners.length >= 2 && sortedWinners[1] && (
+        {sortedWinners.length >= 2 && sortedWinners[1] && sortedWinners[1].submission && (
           <div className="podium-position second-place">
             <div className="winner-medal silver">2</div>
             <div className="winner-artwork">
@@ -150,14 +150,16 @@ const WinnerAnnouncement = ({ contestId, displayMode = 'full' }) => {
                 </div>
               )}
             </div>
-            <h4 className="winner-title">{sortedWinners[1].submission.title}</h4>
+            <h4 className="winner-title">{sortedWinners[1].submission.title || "Untitled"}</h4>
             <p className="winner-artist">
-              By: {sortedWinners[1].submission.user ? sortedWinners[1].submission.user.name : 'Unknown'}
+              By: {sortedWinners[1].submission.user && sortedWinners[1].submission.user.name 
+                ? sortedWinners[1].submission.user.name 
+                : 'Unknown'}
             </p>
           </div>
         )}
         
-        {sortedWinners.length >= 1 && sortedWinners[0] && (
+        {sortedWinners.length >= 1 && sortedWinners[0] && sortedWinners[0].submission && (
           <div className="podium-position first-place">
             <div className="winner-medal gold">1</div>
             <div className="winner-artwork">
@@ -173,9 +175,11 @@ const WinnerAnnouncement = ({ contestId, displayMode = 'full' }) => {
                 </div>
               )}
             </div>
-            <h4 className="winner-title">{sortedWinners[0].submission.title}</h4>
+            <h4 className="winner-title">{sortedWinners[0].submission.title || "Untitled"}</h4>
             <p className="winner-artist">
-              By: {sortedWinners[0].submission.user ? sortedWinners[0].submission.user.name : 'Unknown'}
+              By: {sortedWinners[0].submission.user && sortedWinners[0].submission.user.name 
+                ? sortedWinners[0].submission.user.name 
+                : 'Unknown'}
             </p>
             {displayMode === 'full' && (
               <div className="winner-badge">
@@ -185,7 +189,7 @@ const WinnerAnnouncement = ({ contestId, displayMode = 'full' }) => {
           </div>
         )}
         
-        {sortedWinners.length >= 3 && sortedWinners[2] && (
+        {sortedWinners.length >= 3 && sortedWinners[2] && sortedWinners[2].submission && (
           <div className="podium-position third-place">
             <div className="winner-medal bronze">3</div>
             <div className="winner-artwork">
@@ -201,9 +205,11 @@ const WinnerAnnouncement = ({ contestId, displayMode = 'full' }) => {
                 </div>
               )}
             </div>
-            <h4 className="winner-title">{sortedWinners[2].submission.title}</h4>
+            <h4 className="winner-title">{sortedWinners[2].submission.title || "Untitled"}</h4>
             <p className="winner-artist">
-              By: {sortedWinners[2].submission.user ? sortedWinners[2].submission.user.name : 'Unknown'}
+              By: {sortedWinners[2].submission.user && sortedWinners[2].submission.user.name 
+                ? sortedWinners[2].submission.user.name 
+                : 'Unknown'}
             </p>
           </div>
         )}
