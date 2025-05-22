@@ -1,0 +1,121 @@
+/* Auth Components Styling */
+
+.auth-container {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 30px;
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(114, 9, 183, 0.05));
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(67, 97, 238, 0.2);
+  color: var(--text-color);
+}
+
+.auth-container h2 {
+  color: var(--primary-blue);
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 1.8rem;
+  border-bottom: 2px solid var(--primary-pink);
+  padding-bottom: 10px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.3);
+}
+
+.auth-btn {
+  background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+  box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+}
+
+.auth-btn:hover {
+  background: linear-gradient(to right, var(--accent-cyan), var(--primary-blue));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(67, 97, 238, 0.4);
+}
+
+.auth-btn:disabled {
+  background: linear-gradient(to right, #999, #777);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.auth-error {
+  color: #f72585;
+  background: rgba(247, 37, 133, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(247, 37, 133, 0.3);
+  font-size: 0.9rem;
+}
+
+.auth-success {
+  color: var(--primary-green);
+  background: rgba(76, 201, 160, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(76, 201, 160, 0.3);
+  font-size: 0.9rem;
+}
+
+.auth-toggle {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.auth-toggle a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.auth-toggle a:hover {
+  color: var(--accent-cyan);
+  text-decoration: underline;
+}
