@@ -107,19 +107,22 @@ body {
 }
 
 .btn {
-  background-color: var(--kavia-orange);
+  background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
 }
 
 .btn:hover {
-  background-color: #FF8B4D;
+  background: linear-gradient(to right, var(--accent-cyan), var(--primary-blue));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(67, 97, 238, 0.4);
 }
 
 .btn-large {
