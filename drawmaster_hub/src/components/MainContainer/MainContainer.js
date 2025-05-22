@@ -5,6 +5,7 @@ import AuthContext from '../../context/AuthContext';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import ProtectedRoute from '../Auth/ProtectedRoute';
+import UserDashboard from '../UserDashboard/UserDashboard';
 
 /**
  * MainContainer - Main structural component for DrawMaster Hub application
